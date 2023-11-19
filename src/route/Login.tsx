@@ -1,5 +1,6 @@
 import {schema2component} from '../component/AMISRenderer';
 import config from '../utils/config';
+import {setTokenStorageType} from '../utils/token';
 
 const appInfo = await config.fetcher({
   method: 'get',
@@ -8,8 +9,7 @@ const appInfo = await config.fetcher({
 const token_storage_type =
   appInfo.data?.data?.token?.storage || 'sessionStorage';
 
-//@ts-ignore
-__xgenSetTokenStorageType(token_storage_type);
+setTokenStorageType(token_storage_type);
 
 export default schema2component({
   type: 'page',

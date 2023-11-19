@@ -27,7 +27,7 @@ export function logout() {
  * 获取xgenToken的保存类型，与xgen保持一致
  * @returns
  */
-function __xgenGetTokenStorageType() {
+function getTokenStorageType() {
   const storage = localStorage.getItem(`xgen:token_storage`);
   let stoarge_type = 'localStorage';
   if (storage != null) {
@@ -40,7 +40,45 @@ function __xgenGetTokenStorageType() {
   }
   return stoarge_type;
 }
-function __xgenGetStorage(
+export function setTokenStorageType(typeIn: string) {
+  const type = typeIn === 'localStorage' ? 'localStorage' : 'sessionStorage';
+  xgenSetStorage(`xgen:token_storage`, type, 'localStorage');
+}
+
+/**
+ * 保存xgen的设置，与xgen保持一致
+ * @param {string} key key
+ * @param {object} obj object
+ * @param {string} storageIn
+ */
+function xgenSetStorage(key: string, obj: any, storageIn: string) {
+  // 默认使用localStorage
+  let storage = storageIn === 'sessionStorage' ? sessionStorage : localStorage;
+  let ty = 'String';
+  let value = obj;
+  switch (typeof obj) {
+    case 'string':
+      ty = 'String';
+      value = encodeURIComponent(obj);
+      break;
+    case 'object':
+      ty = 'Object';
+      if (Array.isArray(obj)) {
+        ty = 'Array';
+      }
+      break;
+    case 'number':
+      ty = 'Number';
+      break;
+    default:
+      console.log('Error=========> Not Support Type:' + typeof obj);
+      break;
+  }
+
+  storage.setItem(key, JSON.stringify({type: ty, value: value}));
+}
+
+function xgenGetStorage(
   key: string,
   storageIn?: string
 ): object | string | null {
@@ -58,9 +96,9 @@ function __xgenGetStorage(
 
 export function getToken(tokenIn?: string) {
   const tokenName = tokenIn ? tokenIn : 'token';
-  const stoarage_type = __xgenGetTokenStorageType();
+  const stoarage_type = getTokenStorageType();
 
-  let tokenObj = __xgenGetStorage(`xgen:${tokenName}`, stoarage_type) as any;
+  let tokenObj = xgenGetStorage(`xgen:${tokenName}`, stoarage_type) as any;
 
   let token = null;
   if (tokenObj) {
