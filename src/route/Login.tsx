@@ -13,7 +13,7 @@ setTokenStorageType(token_storage_type);
 
 export default schema2component({
   type: 'page',
-  title: 'x1',
+  title: 'editor',
   body: [
     {
       type: 'flex',
@@ -52,7 +52,7 @@ export default schema2component({
                 password: 'A123456p+'
               },
               api: {
-                url: '/api/__yao/login/admin',
+                url: '/api/v1/amis/login',
                 method: 'post',
                 data: {
                   password: '${password}',
@@ -67,7 +67,7 @@ export default schema2component({
                 adaptor: 'return yao_amis.login(payload,response,api,context)',
                 messages: {}
               },
-              redirect: '/amis-admin',
+              redirect: '/amis-editor',
               body: [
                 {
                   label: '用户名',
