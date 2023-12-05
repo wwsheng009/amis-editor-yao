@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Provider} from 'mobx-react';
 import {MainStore} from './store/index';
 import RootRoute from './route/index';
-import {checkLogin} from './utils/token';
 import config from './utils/config';
 
 export default function (): JSX.Element {

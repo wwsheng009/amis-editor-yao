@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/aisuda/amis-editor-demo#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
-    "amis": "3.5.2",
-    "amis-core": "3.5.2",
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "amis": "3.6.2",
+    "amis-core": "3.6.2",
     "amis-editor": "5.6.2",
     "amis-editor-core": "5.6.2",
     "amis-formula": "3.5.2",
@@ -33,22 +33,22 @@
     "axios": "0.21.2",
     "copy-to-clipboard": "^3.2.0",
     "history": "^5.3.0",
-    "mobx": "4.15.7",
-    "mobx-react": "6.3.1",
-    "mobx-state-tree": "3.17.3",
+    "mobx": "^4.5.0",
+    "mobx-react": "^6.3.1",
+    "mobx-state-tree": "^3.17.3",
     "qs": "6.5.3",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.3",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.123",
-    "@types/node": "^11.13.8",
-    "@types/qs": "^6.5.3",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
+    "@types/lodash": "^4.14.175",
+    "@types/node": "^12.7.1",
+    "@types/qs": "^6.5.1",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
     "@types/react-router": "^4.0.16",
     "@types/react-router-dom": "^5.1.7",
     "acorn": "^8.8.2",
@@ -57,5 +57,12 @@
     "prettier": "^2.2.1",
     "sass": "^1.63.4",
     "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "amis-core": "*",
+    "amis-ui": "*",
+    "office-viewer": "*",
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
   }
 }

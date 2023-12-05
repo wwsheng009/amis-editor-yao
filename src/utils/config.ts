@@ -1,7 +1,7 @@
 import {toast} from 'amis-ui';
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
-import {getToken, deleteToken, checkLogin} from './token';
+import {getToken, deleteToken, checkLogin, logout} from './token';
 
 export default {
   fetcher: ({url, method, data, config, headers, context}: any) => {
@@ -39,7 +39,7 @@ export default {
           error.response.data.code === 403 ||
           error.response.data.code === 402
         ) {
-          checkLogin();
+          logout();
         }
         if (error.response.data.message === 'Invalid token') {
           checkLogin();
@@ -123,12 +123,13 @@ export default {
       .catch(catcherr);
   },
   isCancel: (e: any) => axios.isCancel(e),
-  notify: (type: 'success' | 'error' | 'info', msg: string) => {
-    toast[type]
-      ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
-      : console.warn('[Notify]', type, msg);
-    console.log('[notify]', type, msg);
-  },
+  // 需要在页面上增加自定义的ToastComponent才可以使用
+  // notify: (type: 'success' | 'error' | 'info', msg: string) => {
+  //   toast[type]
+  //     ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
+  //     : console.warn('[Notify]', type, msg);
+  //   console.log('[notify]', type, msg);
+  // },
   alert,
   confirm,
   copy: (contents: string, options: any = {}) => {
