@@ -30,8 +30,12 @@ jobs:
         run: npm run build
         working-directory: ./amis-editor-yao
 
+      - name: List All Files
+        run: ls -lrt .
+        working-directory: ./amis-editor-yao
+
       - name: Zip Output Directory
-        run: zip -r amis-editor.zip ./amis-editor-yao/amis-editor
+        run: zip -r amis-editor.zip ./amis-editor
         working-directory: ./amis-editor-yao
 
       - name: Get Version
