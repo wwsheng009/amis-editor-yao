@@ -42,7 +42,6 @@ export default inject('store')(
     const index: number = parseInt(match.params.id, 10);
     const curLanguage = currentLocale(); // 获取当前语料类型
 
-    console.log(`index:${index},currentIndex:${currentIndex}`);
     if (index !== currentIndex) {
       currentIndex = index;
       store.updateSchema(store.pages[index].schema);
@@ -64,8 +63,7 @@ export default inject('store')(
     }
 
     function exit() {
-      let path = `/${store.pages[index].path}`;
-      history.push(path);
+      history.push(`/${store.pages[index].path}`);
     }
 
     return (
@@ -106,7 +104,6 @@ export default inject('store')(
               clearable={false}
               onChange={(e: any) => changeLocale(e.value)}
             />
-
             <div
               className={`header-action-btn m-1 ${
                 store.preview ? 'primary' : ''

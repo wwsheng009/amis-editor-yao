@@ -47,7 +47,7 @@ module.exports = {
     // 用于开启本地调试模式的相关配置信息
     NODE_ENV: 'development',
     ignoreNodeModules: false, // 打包时是否忽略 node_modules
-    port: 8080,
+    port: 80,
     autoOpenBrowser: true,
     assetsPublicPath: '/', // 设置静态资源的引用路径（根域名+路径）
     assetsSubDirectory: '',
@@ -60,11 +60,15 @@ module.exports = {
        * 将含有'/apiTest'路径的api代理到'http://api-test.com.cn'上，
        * 详细使用见 https://www.webpackjs.com/configuration/dev-server/#devserver-proxy
        */
+      '/apiTest': {
+        target: 'http://api-test.com.cn', // 不支持跨域的接口根地址
+        ws: true,
+        changeOrigin: true
+      },
       '/api': {
         target: 'http://127.0.0.1:5099', // 不支持跨域的接口根地址
         //不能使用localhost,会报错，需要使用127.0.0.1
         ws: true,
-        secure: false,
         changeOrigin: true
       }
     }

@@ -134,27 +134,8 @@ export const MainStore = types
 
     function updatePageSchemaAt(index: number) {
       self.pages[index].updateSchema(self.schema);
-
-      // const updateData = flow(function* () {
-      //   try {
-      //     // const token = getCookie('studio');
-      //     // 保存在数据库，不再需要studio接口
-      //     const _ = yield self.fetcher({
-      //       url: getStudioApiUrl(), //'http://localhost:5077/service/editor',
-      //       // url: '/api/__yao/app/service/editor',
-      //       method: 'post',
-      //       data: {
-      //         method: 'savePage',
-      //         args: [self.pages[index].label, self.schema]
-      //       }
-      //       // config: {headers: {Authorization: 'Bearer ' + token}}
-      //     });
-      //   } catch (err) {}
-      // });
-      // updateData();
     }
 
-    // 修改当前编辑器的源代码
     function updateSchema(value: any) {
       self.schema = value;
     }

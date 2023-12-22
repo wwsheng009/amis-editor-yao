@@ -61,9 +61,9 @@ typings/
 .next
 
 gh-pages
+amis-editor
+demo-5.6.2
+/public
 .DS_Store
 
 package-lock.json
-
-amis-editor
-demo-5.6.2

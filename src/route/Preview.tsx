@@ -25,10 +25,6 @@ export default inject('store')(
     location,
     history
   }: {store: IMainStore} & RouteComponentProps) {
-    //加载所有的page
-    // useEffect(() => {
-    //   store.initData();
-    // }, []);
     function renderHeader() {
       return (
         <>
