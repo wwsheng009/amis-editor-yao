@@ -31,7 +31,7 @@ jobs:
         run: ls -lrt .
 
       - name: Zip Output Directory
-        run: :
+        run: |
           cd amis-editor
           zip -r ../amis-editor.zip .
 
