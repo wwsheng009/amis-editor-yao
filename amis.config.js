@@ -9,18 +9,10 @@ function resolve(dir) {
 // 包括生产和开发的环境配置信息
 module.exports = {
   webpack: {
+    // webpack的resolve配置
     resolve: {
-      // webpack的resolve配置
-      extensions: [
-        '.js',
-        '.jsx',
-        '.ts',
-        '.tsx',
-        '.esm.js',
-        '.umd.js',
-        '.min.js',
-        '.json'
-      ], // 用于配置webpack在尝试过程中用到的后缀列表
+      // 用于配置webpack在尝试过程中用到的后缀列表
+      extensions: ['.js', '.jsx', '.ts', '.tsx','.esm.js', '.umd.js', '.min.js', '.json', '.mjs'],
       alias: {
         '@': resolve('src')
         // $function: resolve('src/function'),
@@ -31,7 +23,7 @@ module.exports = {
     createDeclaration: false, // 打包时是否创建ts声明文件
     ignoreNodeModules: false, // 打包时是否忽略 node_modules
     allowList: [], // ignoreNodeModules为true时生效
-    externals: [],
+    externals: ['react/jsx-runtime'],
     projectDir: ['src'],
     template: resolve('./src/index.html'), // 使用自己的html模板
     // cssLoaderUrl: true,
