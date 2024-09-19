@@ -124,12 +124,12 @@ export default {
   },
   isCancel: (e: any) => axios.isCancel(e),
   // 需要在页面上增加自定义的ToastComponent才可以使用
-  // notify: (type: 'success' | 'error' | 'info', msg: string) => {
-  //   toast[type]
-  //     ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
-  //     : console.warn('[Notify]', type, msg);
-  //   console.log('[notify]', type, msg);
-  // },
+  notify: (type: 'success' | 'error' | 'info', msg: string) => {
+    toast[type]
+      ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
+      : console.warn('[Notify]', type, msg);
+    console.log('[notify]', type, msg);
+  },
   alert,
   confirm,
   copy: (contents: string, options: any = {}) => {
