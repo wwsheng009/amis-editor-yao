@@ -42,7 +42,7 @@ export default {
           logout();
         }
         if (error.response.data.message === 'Invalid token') {
-          checkLogin();
+          logout();
         }
       } else if (error.request) {
         // The request was made but no response was received
