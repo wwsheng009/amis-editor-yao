@@ -14,7 +14,8 @@ module.exports = {
       // 用于配置webpack在尝试过程中用到的后缀列表
       extensions: ['.js', '.jsx', '.ts', '.tsx','.esm.js', '.umd.js', '.min.js', '.json', '.mjs'],
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        'react/jsx-runtime': 'react/jsx-runtime.js',
         // $function: resolve('src/function'),
         // $utils: resolve('src/utils'),
       }

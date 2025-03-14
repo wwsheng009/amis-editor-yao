@@ -10,6 +10,7 @@ amis 可视化编辑器, 在线体验：https://aisuda.github.io/amis-editor-dem
 3. `npm run dev` 等编译完成后本地打开页面看效果。
 
 ## 历史版本预览地址
+1. [6.11.0(2025.03.12)](https://aisuda.github.io/amis-editor-demo/demo-6.11.0/index.html)
 1. [6.7.0(2024.08.06)](https://aisuda.github.io/amis-editor-demo/demo-6.7.0/index.html)
 2. [6.0.0(2023.12.29)](https://aisuda.github.io/amis-editor-demo/demo-6.0.0/index.html)
 3. [5.6.2(2023.10.31)](https://aisuda.github.io/amis-editor-demo/demo-5.6.2/index.html)
