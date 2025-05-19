@@ -48,8 +48,8 @@ export default schema2component({
               type: 'form',
               title: '',
               data: {
-                username: 'xiang@iqka.com',
-                password: 'A123456p+'
+                username: '',
+                password: ''
               },
               api: {
                 url: '/api/v1/amis/login',
