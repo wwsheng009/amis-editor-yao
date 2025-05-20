@@ -22,7 +22,9 @@ jobs:
           repository: wwsheng009/amis-editor-yao
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          sudo apt install wget -y
+          npm install
 
       - name: Build Project
         run: npm run build
@@ -34,6 +36,7 @@ jobs:
         run: |
           cd amis-editor
           find ./ -type f -name "*.js" -exec sed -i 's/baidu\.gitee\.io/baidu\.github\.io/g' {} \;
+          wget -O schema.json https://github.com/baidu/amis/releases/download/6.11.0/schema.json
           zip -r ../amis-editor.zip .
 
       - name: Get Version
