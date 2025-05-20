@@ -33,6 +33,7 @@ jobs:
       - name: Zip Output Directory
         run: |
           cd amis-editor
+          find ./ -type f -name "*.js" -exec sed -i 's/baidu\.gitee\.io/baidu\.github\.io/g' {} \;
           zip -r ../amis-editor.zip .
 
       - name: Get Version
