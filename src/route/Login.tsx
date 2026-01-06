@@ -13,49 +13,74 @@ setTokenStorageType(token_storage_type);
 
 export default schema2component({
   type: 'page',
-  title: 'editor',
+  aside: [],
+  asideResizor: false,
   body: [
     {
+      style: {
+        'flexDirection': 'column',
+        'justifyContent': 'center',
+        'background-size': 'cover',
+        'overflowX': 'visible',
+        'alignItems': 'center',
+        'height': '100%',
+        'background-repeat': 'no-repeat',
+        'overflowY': 'auto',
+        'inset': 'auto',
+        'flexWrap': 'nowrap',
+        'position': 'relative'
+      },
+      themeCss: {
+        baseControlClassName: {
+          'padding-and-margin:default': {
+            padding: '0'
+          }
+        }
+      },
       type: 'flex',
-      id: 'u:b966e0d731ee',
       className: 'p-1',
+      id: 'u:b966e0d731ee',
+      isFixedHeight: false,
+      isFixedWidth: true,
       items: [
         {
-          type: 'container',
           body: [
             {
-              type: 'container',
               body: [
                 {
-                  type: 'tpl',
-                  tpl: '请登录系统',
+                  id: 'u:984c8b793d59',
                   inline: true,
-                  wrapperComponent: 'h1',
-                  id: 'u:984c8b793d59'
+                  style: {},
+                  themeCss: {
+                    baseControlClassName: {
+                      'font:default': {
+                        color: 'white'
+                      }
+                    }
+                  },
+                  tpl: '${app.description}',
+                  type: 'tpl',
+                  wrapperComponent: 'h1'
                 }
               ],
-              style: {
-                'position': 'static',
-                'display': 'block',
-                'text-align': 'center'
-              },
-              wrapperBody: false,
               id: 'u:ca90e0af9a90',
               isFixedHeight: false,
-              isFixedWidth: false
+              isFixedWidth: false,
+              style: {
+                'position': 'static',
+                'text-align': 'center',
+                'display': 'block'
+              },
+              type: 'container',
+              wrapperBody: false
             },
             {
-              type: 'form',
-              title: '',
-              data: {
-                username: '',
-                password: ''
-              },
+              labelAlign: 'left',
               api: {
-                url: '/api/v1/amis/login',
-                method: 'post',
+                url: '',
                 data: {
                   password: '${password}',
+                  sid: '${ls:temp_sid}',
                   captcha: {
                     id: '${captcha.id}',
                     code: '${code}'
@@ -63,198 +88,293 @@ export default schema2component({
                   email: '${username}'
                 },
                 dataType: 'json',
-                requestAdaptor: '',
-                adaptor: 'return yao_amis.login(payload,response,api,context)',
-                messages: {}
+                method: 'get'
               },
-              redirect: '/amis-editor',
-              body: [
+              dsType: 'api',
+              feat: 'Insert',
+              name: 'login_form',
+              title: '',
+              actions: [
                 {
-                  label: '用户名',
-                  type: 'input-email',
-                  name: 'username',
-                  id: 'u:31e63ad3f078',
-                  labelWidth: '25%',
-                  required: true
-                },
-                {
-                  type: 'input-password',
-                  name: 'password',
-                  id: 'u:1409ae59b46a',
-                  label: '密码',
-                  showCounter: false,
-                  validations: {},
-                  validationErrors: {},
-                  size: 'full',
-                  labelWidth: '25%',
-                  required: true
-                },
-                {
-                  type: 'flex',
-                  className: 'p-1',
-                  items: [
-                    {
-                      type: 'container',
-                      body: [
+                  disabled: false,
+                  disabledOnAction: false,
+                  id: 'u:b4412e3fb86c',
+                  label: '登录',
+                  level: 'primary',
+                  onEvent: {
+                    click: {
+                      actions: [
                         {
-                          type: 'input-text',
-                          label: '验证码',
-                          name: 'code',
-                          id: 'u:ec84b7362fdc',
-                          required: true
+                          actionType: 'ajax',
+                          ignoreError: false,
+                          options: {},
+                          api: {
+                            dataType: 'json',
+                            url: '/api/user/entry/verify',
+                            method: 'post',
+                            requestAdaptor: '',
+                            adaptor: '',
+                            messages: {},
+                            silent: true,
+                            data: {
+                              username: '${username}',
+                              locale: 'zh-CN',
+                              captcha: '${captcha}',
+                              captcha_id: '${captcha_id}'
+                            }
+                          }
+                        },
+                        {
+                          expression: '${responseData.user_exists == false}',
+                          ignoreError: false,
+                          actionType: 'toast',
+                          args: {
+                            msg: '用户未注册',
+                            className: 'theme-toast-action-scope',
+                            msgType: 'error',
+                            position: 'top-right',
+                            closeButton: true,
+                            showIcon: true
+                          }
+                        },
+                        {
+                          expression: '${responseData.user_exists == true}',
+                          api: {
+                            messages: {},
+                            data: {
+                              password: '${password}'
+                            },
+                            headers: {
+                              authorization:
+                                'Bearer ${responseData.access_token}'
+                            },
+                            url: '/api/user/entry/login',
+                            method: 'post',
+                            requestAdaptor: '',
+                            adaptor: '',
+                            silent: true
+                          },
+                          ignoreError: false,
+                          actionType: 'ajax',
+                          options: {}
+                        },
+                        {
+                          args: {},
+                          ignoreError: false,
+                          script:
+                            "const event1 = new CustomEvent('navigate', { detail: { path: '/' } });\n      window.dispatchEvent(event1);\n      window.location.reload();",
+                          actionType: 'custom'
                         }
                       ],
+                      weight: 0
+                    }
+                  },
+                  type: 'submit'
+                }
+              ],
+              id: 'u:478b66087163',
+              body: [
+                {
+                  type: 'input-email',
+                  id: 'u:31e63ad3f078',
+                  label: '用户名',
+                  labelWidth: '25%',
+                  name: 'username',
+                  required: true
+                },
+                {
+                  showCounter: false,
+                  validations: {},
+                  id: 'u:1409ae59b46a',
+                  size: 'full',
+                  validationErrors: {},
+                  labelWidth: '25%',
+                  type: 'input-password',
+                  label: '密码',
+                  name: 'password',
+                  required: true
+                },
+                {
+                  isFixedWidth: false,
+                  items: [
+                    {
+                      body: [
+                        {
+                          labelWidth: '93px',
+                          name: 'captcha',
+                          required: true,
+                          type: 'input-text',
+                          id: 'u:ec84b7362fdc',
+                          label: '验证码'
+                        }
+                      ],
+                      id: 'u:ffb31fbc5a2f',
+                      isFixedHeight: false,
+                      isFixedWidth: false,
                       size: 'xs',
                       style: {
+                        flexGrow: '1',
                         position: 'static',
                         display: 'block',
                         flex: '1 1 auto',
-                        flexGrow: 2,
                         flexBasis: 'auto'
                       },
-                      wrapperBody: false,
-                      isFixedHeight: false,
-                      isFixedWidth: false,
-                      id: 'u:ffb31fbc5a2f'
+                      type: 'container',
+                      wrapperBody: false
                     },
                     {
-                      type: 'container',
+                      isFixedHeight: false,
+                      themeCss: {
+                        baseControlClassName: {
+                          'padding-and-margin:default': {
+                            'margin-left': '5px'
+                          }
+                        }
+                      },
                       body: [
                         {
+                          id: 'u:8397fdf65bcf',
+                          messages: {},
+                          name: 'captcha',
                           type: 'service',
+                          api: {
+                            method: 'get',
+                            url: '/api/user/entry/captcha',
+                            messages: {}
+                          },
                           body: [
                             {
+                              name: 'captcha_image',
                               type: 'image',
-                              id: 'u:ba0e071441b0',
                               height: 50,
-                              src: '${captcha.code}',
-                              enlargeAble: false,
+                              style: {
+                                display: 'inline-block'
+                              },
+                              id: 'u:ba0e071441b0',
+                              maxScale: 200,
+                              width: 111,
                               clickAction: {
                                 actionType: 'reload',
                                 target: 'captcha'
-                              }
+                              },
+                              enlargeAble: false,
+                              minScale: 50
                             }
                           ],
-                          id: 'u:8397fdf65bcf',
-                          api: 'get:/api/v1/amis/captcha?type=digit',
-                          messages: {},
-                          name: 'captcha'
+                          dsType: 'api'
                         }
                       ],
+                      id: 'u:484e51667851',
+                      isFixedWidth: false,
                       size: 'xs',
                       style: {
                         position: 'static',
                         display: 'block',
                         flex: '1 1 auto',
-                        flexGrow: 1,
-                        flexBasis: 'auto'
+                        flexBasis: 'auto',
+                        flexGrow: '1'
                       },
                       wrapperBody: false,
-                      isFixedHeight: false,
-                      isFixedWidth: false,
-                      id: 'u:484e51667851'
+                      type: 'container'
                     }
                   ],
                   style: {
-                    position: 'relative',
-                    inset: 'auto',
+                    flexDirection: 'row',
                     flexWrap: 'nowrap',
+                    inset: 'auto',
                     justifyContent: 'flex-start',
-                    alignItems: 'stretch'
+                    position: 'relative',
+                    alignItems: 'flex-start'
                   },
+                  type: 'flex',
                   id: 'u:964b6f951a7b',
-                  isFixedHeight: false,
-                  isFixedWidth: false
+                  isFixedHeight: false
                 },
                 {
-                  type: 'grid',
-                  columns: [],
-                  id: 'u:925c7b7627ca'
-                }
-              ],
-              mode: 'horizontal',
-              id: 'u:478b66087163',
-              actions: [
-                {
+                  isFixedWidth: false,
+                  style: {
+                    'text-align': 'right',
+                    'display': 'block',
+                    'position': 'static'
+                  },
+                  themeCss: {
+                    baseControlClassName: {
+                      'padding-and-margin:default': {
+                        padding: '4px'
+                      }
+                    }
+                  },
                   type: 'container',
+                  wrapperBody: false,
                   body: [
                     {
-                      type: 'button',
-                      label: '登录',
-                      onEvent: {
-                        click: {
-                          actions: [
-                            {
-                              actionType: 'submit',
-                              componentId: 'u:478b66087163',
-                              args: {}
-                            }
-                          ]
-                        }
-                      },
-                      id: 'u:b4412e3fb86c',
-                      themeCss: {
-                        className: {
-                          'width:default': '80%',
-                          '--Panel-footerButtonMarginLeft:default': '0'
-                        }
-                      },
-                      className:
-                        'className-77438f42a265 className-b4412e3fb86c',
-                      disabled: false,
-                      level: 'primary'
+                      body: '注册新账号',
+                      className: '',
+                      href: '/amis-admin/register.html',
+                      id: 'u:cd8a818c14a6',
+                      type: 'link'
                     }
                   ],
-                  style: {
-                    'position': 'static',
-                    'display': 'block',
-                    'text-align': 'center',
-                    'marginLeft': '0'
-                  },
+                  id: 'u:663b59115c4a',
+                  isFixedHeight: false
+                },
+                {
                   wrapperBody: false,
-                  id: 'u:67c274c06d4c',
+                  body: [
+                    {
+                      style: {
+                        width: '100%'
+                      },
+                      tpl: '',
+                      type: 'tpl',
+                      wrapperComponent: '',
+                      id: 'u:6280709f459d',
+                      inline: true
+                    }
+                  ],
+                  hide: true,
+                  id: 'u:b4735bec3346',
                   isFixedHeight: false,
-                  isFixedWidth: false
+                  isFixedWidth: false,
+                  style: {
+                    display: 'block',
+                    position: 'static',
+                    textAlign: 'center'
+                  },
+                  type: 'container'
                 }
               ],
+              data: {
+                username: '${cookie:email}'
+              },
               wrapWithPanel: true,
-              className: '',
-              name: 'login_form'
+              mode: 'horizontal',
+              redirect: '/amis-editor',
+              type: 'form'
             }
           ],
-          size: 'xs',
-          style: {
-            position: 'static',
-            display: 'block',
-            flex: '1 1 auto',
-            flexGrow: '0',
-            flexBasis: 'auto',
-            maxWidth: '400px',
-            overflowX: 'auto',
-            minWidth: '400px'
-          },
-          wrapperBody: false,
+          id: 'u:03d22f862544',
           isFixedHeight: false,
           isFixedWidth: false,
-          id: 'u:03d22f862544'
+          size: 'xs',
+          style: {
+            flex: '0',
+            flexBasis: 'auto',
+            overflowX: 'auto',
+            overflowY: 'auto',
+            position: 'static',
+            display: 'block'
+          },
+          type: 'container',
+          wrapperBody: false
         }
-      ],
-      style: {
-        position: 'relative',
-        inset: 'auto',
-        flexWrap: 'nowrap',
-        height: '100%',
-        overflowY: 'auto',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center'
-      },
-      isFixedHeight: true,
-      isFixedWidth: false
+      ]
     }
   ],
   id: 'u:a7238be79bbc',
-  aside: [],
+  pullRefresh: {
+    disabled: true
+  },
   regions: ['body'],
-  asideResizor: false
+  title: '登录'
 });

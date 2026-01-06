@@ -3,6 +3,7 @@
  */
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import {HashRouter} from 'react-router-dom';
 import App from './App';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/css/v4-shims.css';
@@ -14,11 +15,16 @@ import './scss/style.scss';
 import {setDefaultTheme} from 'amis';
 import {setThemeConfig} from 'amis-editor-core';
 import themeConfig from 'amis-theme-editor-helper/lib/systemTheme/cxd';
-import {checkLogin} from './utils/token';
+// import {checkLogin} from './utils/token';
 
 setDefaultTheme('cxd');
 setThemeConfig(themeConfig);
 
-checkLogin();
+// checkLogin();
 // react < 18
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <HashRouter>
+    <App />
+  </HashRouter>,
+  document.getElementById('root')
+);

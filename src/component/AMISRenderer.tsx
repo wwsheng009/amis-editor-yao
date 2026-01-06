@@ -1,5 +1,5 @@
 import React from 'react';
-import {RouteComponentProps, withRouter} from 'react-router';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {inject, observer} from 'mobx-react';
 import {getEnv} from 'mobx-state-tree';
 import {IMainStore} from '../store';

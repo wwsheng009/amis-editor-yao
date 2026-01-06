@@ -1,17 +1,19 @@
-import {createHashHistory} from 'history';
-
 export function deleteToken(tokenIn?: string) {
   const tokenName = tokenIn ? tokenIn : 'token';
   sessionStorage.removeItem(`xgen:${tokenName}`);
   localStorage.removeItem(`xgen:${tokenName}`);
   deleteCookie(tokenName);
 }
-const history = createHashHistory({});
 
+// 使用自定义事件触发路由跳转
+export function navigateToLogin() {
+  const event = new CustomEvent('navigate', {detail: {path: '/login'}});
+  window.dispatchEvent(event);
+}
 export function checkLogin() {
   const token = getToken();
   if (!token) {
-    history.push('/login');
+    navigateToLogin();
   }
 }
 export function logout() {
@@ -19,8 +21,7 @@ export function logout() {
   deleteToken('studio');
   localStorage.removeItem(`store`);
 
-  history.replace('/login');
-  window.location.reload();
+  navigateToLogin();
 }
 
 /**

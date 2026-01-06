@@ -154,22 +154,22 @@ export const MainStore = types
       const getData = flow(function* () {
         try {
           let schemas: {[key: string]: string} = {};
-          const token = getToken();
+          // const token = getToken();
 
-          if (token) {
-            // 保存在数据库，不再需要studio接口
-            const response = yield self.fetcher({
-              url: getStudioApiUrl(), //'http://localhost:5077/service/editor',
-              // url: '/api/__yao/app/service/editor',
-              method: 'post',
-              data: {
-                method: 'getPages',
-                args: []
-              }
-              // config: {headers: {Authorization: 'Bearer ' + token}}
-            });
-            schemas = response.data.data as any;
-          }
+          // if (token) {
+          // 保存在数据库，不再需要studio接口
+          const response = yield self.fetcher({
+            url: getStudioApiUrl(), //'http://localhost:5077/service/editor',
+            // url: '/api/__yao/app/service/editor',
+            method: 'post',
+            data: {
+              method: 'getPages',
+              args: []
+            }
+            // config: {headers: {Authorization: 'Bearer ' + token}}
+          });
+          schemas = response.data.data as any;
+          // }
           // applySnapshot(self, initialState);
           for (let property in schemas) {
             // console.log(schemas[property]);

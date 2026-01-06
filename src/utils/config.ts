@@ -9,28 +9,34 @@ export default {
     config.headers = config.headers || headers || {};
     //使用token
 
-    let token = getToken();
+    // let token = getToken();
     config.withCredentials = true;
-    try {
-      const url2 = new URL(url);
-      //跨域
-      //后端可能会设置：Access-Control-Allow-Origin:'*'，与withCredentials会有冲突
-      if (
-        url2.port !== window.location.port ||
-        url2.host !== window.location.host ||
-        url2.protocol != window.location.protocol
-        //使用studio
-      ) {
-        token = getToken('studio');
-        config.withCredentials = false;
-      }
-    } catch (error) {}
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
+    // try {
+    //   const url2 = new URL(url);
+    //   //跨域
+    //   //后端可能会设置：Access-Control-Allow-Origin:'*'，与withCredentials会有冲突
+    //   if (
+    //     url2.port !== window.location.port ||
+    //     url2.host !== window.location.host ||
+    //     url2.protocol != window.location.protocol
+    //     //使用studio
+    //   ) {
+    //     token = getToken('studio');
+    //     config.withCredentials = false;
+    //   }
+    // } catch (error) {}
+    // if (token) {
+    //   config.headers['Authorization'] = `Bearer ${token}`;
+    // }
 
     const catcherr = (error: any) => {
       if (error.response) {
+        if (
+          error.response.status == 401 ||
+          error.response.data?.error == 'token_missing'
+        ) {
+          logout();
+        }
         if (error.response.data && error.response.data.message) {
           error.message = error.response.data.message;
         }
