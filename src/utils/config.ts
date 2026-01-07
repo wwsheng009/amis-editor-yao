@@ -1,8 +1,18 @@
 import {toast} from 'amis-ui';
+import {alert, confirm} from 'amis-ui/lib/components/Alert';
+
 import axios from 'axios';
 import copy from 'copy-to-clipboard';
-import {getToken, deleteToken, checkLogin, logout} from './token';
+import {logout} from './token';
 
+const __notify = function (type: 'success' | 'error' | 'info', msg: string) {
+  if (msg == '') {
+    console.log('[notify]', type, msg);
+  }
+  toast[type]
+    ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
+    : console.warn('[Notify]', type, msg);
+};
 export default {
   fetcher: ({url, method, data, config, headers, context}: any) => {
     config = config || {};
@@ -31,6 +41,10 @@ export default {
 
     const catcherr = (error: any) => {
       if (error.response) {
+        if (error.response.data?.error_description) {
+          error.message = error.response.data.error_description;
+          __notify('error', error.response.data.error_description);
+        }
         if (
           error.response.status == 401 ||
           error.response.data?.error == 'token_missing'
@@ -40,7 +54,6 @@ export default {
         if (error.response.data && error.response.data.message) {
           error.message = error.response.data.message;
         }
-
         if (
           error.response.data.code === 403 ||
           error.response.data.code === 402
@@ -65,6 +78,9 @@ export default {
       });
     };
     const check = (response: any) => {
+      if (response.data?.error_descriptionor) {
+        response.message = response.data.error_description;
+      }
       if (
         typeof response.data === 'object' &&
         response.data !== null &&
@@ -130,12 +146,7 @@ export default {
   },
   isCancel: (e: any) => axios.isCancel(e),
   // 需要在页面上增加自定义的ToastComponent才可以使用
-  notify: (type: 'success' | 'error' | 'info', msg: string) => {
-    toast[type]
-      ? toast[type](msg, type === 'error' ? '系统错误' : '系统消息')
-      : console.warn('[Notify]', type, msg);
-    console.log('[notify]', type, msg);
-  },
+  notify: __notify,
   alert,
   confirm,
   copy: (contents: string, options: any = {}) => {

@@ -1,6 +1,6 @@
-import {schema2component} from '../component/AMISRenderer';
+import { schema2component } from '../component/AMISRenderer';
 import config from '../utils/config';
-import {setTokenStorageType} from '../utils/token';
+import { setTokenStorageType } from '../utils/token';
 
 const appInfo = await config.fetcher({
   method: 'get',
@@ -122,19 +122,6 @@ export default schema2component({
                               captcha: '${captcha}',
                               captcha_id: '${captcha_id}'
                             }
-                          }
-                        },
-                        {
-                          expression: '${responseData.user_exists == false}',
-                          ignoreError: false,
-                          actionType: 'toast',
-                          args: {
-                            msg: '用户未注册',
-                            className: 'theme-toast-action-scope',
-                            msgType: 'error',
-                            position: 'top-right',
-                            closeButton: true,
-                            showIcon: true
                           }
                         },
                         {
